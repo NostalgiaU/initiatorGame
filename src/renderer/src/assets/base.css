@@ -35,6 +35,13 @@
   --color-text: var(--ev-c-text-1);
 }
 
+:root {
+  --init-font-xs: 12px;
+  --init-font-sm: 13px;
+  --init-font-base: 14px;
+  --init-font-lg: 16px;
+}
+
 *,
 *::before,
 *::after {
@@ -68,4 +75,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.no-scroll::-webkit-scrollbar {
+  display: none;
+  overflow: auto;
 }

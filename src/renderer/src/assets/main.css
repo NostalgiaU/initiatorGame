@@ -8,6 +8,9 @@ body {
   /* background-image: url('./wavy-lines.svg'); */
   background-size: cover;
   user-select: none;
+  background-image: url('./example/bg-3.jpg');
+  backdrop-filter: brightness(40%);
+  transform: translateZ(0);
 }
 
 code {
@@ -106,15 +109,6 @@ code {
 
 .drap-button {
   -webkit-app-region: drag;
-}
-
-.presentation-mode {
-  .my-slide {
-    height: 100vh;
-    img{
-      height: 100%;
-    }
-  }
 }
 
 @media (max-width: 720px) {

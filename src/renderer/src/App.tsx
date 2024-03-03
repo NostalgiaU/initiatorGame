@@ -1,10 +1,13 @@
-import Img1 from './assets/PixPin_2024-03-02_19-28-01.png'
+import { Route, HashRouter, Routes } from 'react-router-dom'
+import { Home } from './pages/Home'
 
 function App(): JSX.Element {
   return (
-    <div className="h-full w-full">
-      <img src={Img1} alt="" />
-    </div>
+    <HashRouter>
+      <Routes>
+        <Route path="/" Component={Home} />
+      </Routes>
+    </HashRouter>
   )
 }
 
