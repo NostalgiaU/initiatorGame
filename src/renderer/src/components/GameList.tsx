@@ -1,39 +1,48 @@
-import Game1 from '../assets/example/game1.jpg'
-import Game2 from '../assets/example/game2.jpg'
-import Game3 from '../assets/example/game3.jpg'
-import Game4 from '../assets/example/game4.jpg'
-import Game5 from '../assets/example/game5.jpg'
-import Game6 from '../assets/example/game6.jpg'
-import Game7 from '../assets/example/game7.jpg'
-import Game8 from '../assets/example/game8.jpg'
-import Game9 from '../assets/example/game9.jpg'
-import Game10 from '../assets/example/game10.jpg'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
+import { useStore } from '@src/hooks/data-hooks'
+import { data } from '../mock/data'
+import { Slide } from './Slides/Slides'
 
 export const GameList: React.FC = () => {
-  const gameItems = [Game1, Game2, Game3, Game4, Game5, Game6, Game7, Game8, Game9, Game10]
-  const itemCls = classNames(
-    'inline-block mr-4 w-[250px] h-[250px] rounded-md box-border overflow-hiiden'
-  )
+  const { configData, setCurrentGameId, currentGameData } = useStore()
+  const { games } = configData
+
   const imgCls = classNames(
-    'shadow-lg w-full h-full object-cover overflow-hidden rounded-md overflow-hiiden'
+    'shadow-lg w-full h-full objecFt-cover overflow-hidden rounded-md overflow-hiiden'
   )
 
+  const save = () => {
+    window.electron.ipcRenderer.send('writeFile', JSON.stringify(data))
+  }
+
   return (
-    <div className="-ml-[185px] h-[300px] items-center whitespace-nowrap overflow-auto no-scroll">
-      {gameItems.map((item, index) => {
-        return (
-          <div
-            className={classNames(itemCls, {
-              'p-2 rounded-2 border-[2px] border-solid border-blue-600 w-[300px] h-[300px] -mb-[25px]':
-                index === 1
-            })}
-            key={item}
+    <div>
+      <button onClick={save}>Save</button>
+      <div className="items-center whitespace-nowrap overflow-auto no-scroll">
+        <div className="ml-20">
+          <Slide
+            onChange={(index) => {
+              console.log(index)
+              setCurrentGameId(index)
+            }}
           >
-            <img className={imgCls} src={item} />
-          </div>
-        )
-      })}
+            {games.map((item) => {
+              return <img className={imgCls} src={item.iconUrl} key={item.id} />
+            })}
+          </Slide>
+        </div>
+      </div>
+      <div className="text-[40px] px-20 mt-6">{currentGameData?.name}</div>
+      <div
+        className="fixed left-0 top-0 w-[100vw] h-[100vh] -z-10 brightness-[40%]"
+        style={{
+          backgroundImage: `url(${currentGameData?.bgUrl})`,
+          backgroundSize: '100% 100%',
+          transform: 'translateZ(0)',
+          transition: 'background-image 500ms'
+        }}
+      />
     </div>
   )
 }
