@@ -83,10 +83,10 @@ devDependencies:
     specifier: ^2.5.1
     version: 2.5.1
   electron:
-    specifier: ^28.2.0
+    specifier: ^28.2.5
     version: 28.2.5
   electron-builder:
-    specifier: ^24.9.1
+    specifier: ^24.12.0
     version: 24.12.0
   electron-vite:
     specifier: ^2.0.0
