@@ -1,8 +1,8 @@
 export const data = {
   games: [
     {
-      name: '女神异闻录1',
-      id: 0,
+      name: '女神异闻录1111',
+      id: 110,
       gameUrl: '/src/assets/example/game1.jpg',
       bgUrl: '/src/assets/example/bg-1.jpg',
       iconUrl: '/src/assets/example/game1.jpg',

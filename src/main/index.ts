@@ -3,9 +3,10 @@ import path, { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import fs from 'fs'
+import { INIT_CONFIG_DATA } from '../constant/data'
 
-const NOTIFICATION_TITLE = 'Basic Notification'
-const NOTIFICATION_BODY = 'Notification from the Main process'
+const NOTIFICATION_TITLE = '打开失败'
+const NOTIFICATION_BODY = '请检查路径是否准确'
 
 function showNotification() {
   new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
@@ -25,7 +26,8 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
-      nodeIntegration: true
+      nodeIntegration: true,
+      webSecurity: false
     }
     // titleBarStyle: 'hidden'
   })
@@ -88,15 +90,22 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
-
-ipcMain.on('writeFile', (_, arg) => {
+function openApp(app: string) {
+  shell.openPath(app).catch(() => {
+    showNotification()
+  })
+}
+function writeFile(arg) {
   try {
     const filePath = path.join(userDataPath, 'config')
-    const data = fs.writeFileSync(filePath, arg, 'utf8')
+    fs.writeFileSync(filePath, arg, 'utf8')
     console.log('success')
   } catch (err) {
     console.error('error:', err)
   }
+}
+ipcMain.on('writeFile', (_, arg) => {
+  writeFile(arg)
 })
 
 ipcMain.on('readFile', (event) => {
@@ -104,9 +113,16 @@ ipcMain.on('readFile', (event) => {
     const filePath = path.join(userDataPath, 'config')
     const data = fs.readFileSync(filePath, 'utf8')
     // event.returnValue(data)
+    if (!data) writeFile(INIT_CONFIG_DATA)
     event.sender.send('checkPerlReply', data)
-    console.log('success', data)
+    console.log('success', userDataPath)
   } catch (err) {
     console.error('error:', err)
   }
+})
+
+ipcMain.on('openExternalApp', (_, arg) => {
+  console.log(arg)
+
+  openApp(arg)
 })

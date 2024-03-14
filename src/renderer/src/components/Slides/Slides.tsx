@@ -12,14 +12,6 @@ export const Slide: React.FC<{ children: ReactNode[]; onChange: (index: number) 
 
   const [transformX, setTransformX] = useState(0)
 
-  const handleNext = () => {
-    setCurrentPage((prevPage) => prevPage + 1)
-  }
-
-  const handlePrev = () => {
-    setCurrentPage((prevPage) => prevPage - 1)
-  }
-
   // 剩余最后几个时不滚动
   const scrolleble = useMemo(() => {
     const containerWidth = container.current?.clientWidth || 0
@@ -33,7 +25,7 @@ export const Slide: React.FC<{ children: ReactNode[]; onChange: (index: number) 
   }, [currentPage, scrolleble])
 
   useEffect(() => {
-    onChange(currentPage)
+    typeof currentPage !== 'undefined' && onChange(currentPage)
   }, [currentPage])
 
   return (
@@ -51,7 +43,10 @@ export const Slide: React.FC<{ children: ReactNode[]; onChange: (index: number) 
                 children={i}
                 key={index}
                 active={currentPage === index}
-                onClick={() => setCurrentPage(index)}
+                onClick={() => {
+                  console.log(index)
+                  setCurrentPage(index)
+                }}
               />
             )
           })}

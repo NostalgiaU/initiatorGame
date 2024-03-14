@@ -6,20 +6,20 @@ const animeAtom = atom<ConfigData>({ games: [] })
 
 export const useStore = () => {
   const [configData, setConfigData] = useAtom(animeAtom)
-  const [currentGameId, setCurrentGameId] = useState(0)
+  const [currentGameIndex, setCurrentGameIndex] = useState(0)
 
   const setData = useCallback((data: ConfigData) => setConfigData(data), [])
 
   const currentGameData = useMemo(() => {
-    const data = configData.games.find((i) => i.id === currentGameId)
+    const data = configData.games?.[currentGameIndex]
     return data
-  }, [configData, currentGameId])
+  }, [configData, currentGameIndex])
 
   return {
     configData,
     setConfigData,
     setData,
-    setCurrentGameId,
+    setCurrentGameIndex,
     currentGameData
   }
 }

@@ -1,15 +1,18 @@
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
 
 export const Tabs: React.FC = () => {
   const tabs = [
     {
-      name: 'My games'
+      name: '我的游戏',
+      link: '/'
     },
+    // {
+    //   name: 'Store'
+    // },
     {
-      name: 'Store'
-    },
-    {
-      name: 'Settings'
+      name: '设置',
+      link: '/setting'
     }
   ]
 
@@ -24,14 +27,16 @@ export const Tabs: React.FC = () => {
     <div className="flex items-center gap-8 px-20 py-10">
       <span className={classNames(spanCls, 'rounded-tl-lg')}>LB</span>
       {tabs.map((i, index) => (
-        <div
-          key={i.name}
-          className={classNames(tabItemCls, {
-            'bg-opacity-25 backdrop-filter backdrop-blur-sm shadow-md bg-white': index === 0
-          })}
-        >
-          {i.name}
-        </div>
+        <Link key={i.name} to={i.link}>
+          <div
+            className={classNames(tabItemCls, {
+              'bg-opacity-25 backdrop-filter backdrop-blur-sm shadow-md bg-white': index === 0
+            })}
+            onClick={() => {}}
+          >
+            {i.name}
+          </div>
+        </Link>
       ))}
       <span className={classNames(spanCls, 'rounded-tr-lg')}>RB</span>
     </div>

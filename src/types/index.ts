@@ -4,8 +4,10 @@ export interface ConfigData {
   name?: string
 }
 
+export type GameIdType = string | number
+
 export interface GameData {
-  id: number // 游戏ID
+  id: GameIdType // 游戏ID
   name: string // 游戏名称
   gameUrl: string // 游戏启动地址
   bgUrl: string // 游戏背景
