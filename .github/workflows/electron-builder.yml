@@ -19,8 +19,7 @@ jobs:
       os: [windows-latest, macos-latest, ubuntu-latest]
 
   steps:
-    - name: Check out git repository
-      uses: actions/checkout@v4.0.0
+    - uses: actions/checkout@v4.0.0
 
     - name: Install Node.js
       uses: actions/setup-node@v3.0.0
