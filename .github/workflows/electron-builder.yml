@@ -18,40 +18,44 @@ jobs:
     matrix:
       os: [windows-latest, macos-latest, ubuntu-latest]
 
-  steps:
-    - name: Install Node.js
-      uses: actions/setup-node@v3.0.0
-      with:
-        node-version: '18'
+  build:
+    steps:
+      - name: Checkout reposistory
+        uses: actions/checkout@v4.0.0
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install Node.js
+        uses: actions/setup-node@v3.0.0
+        with:
+          node-version: '18'
 
-    - name: Build Electron App
-      run: npm run dist
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Cleanup Artifacts for Windows
-      if: matrix.os == 'windows-latest'
-      run: |
-        npx rimraf "dist/!(*.exe)"
+      - name: Build Electron App
+        run: npm run dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
-    - name: Cleanup Artifacts for MacOS
-      if: matrix.os == 'macos-latest'
-      run: |
-        npx rimraf "dist/!(*.dmg)"
+      - name: Cleanup Artifacts for Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          npx rimraf "dist/!(*.exe)"
 
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3.0.0
-      with:
-        name: ${{ matrix.os }}
-        path: dist
+      - name: Cleanup Artifacts for MacOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          npx rimraf "dist/!(*.dmg)"
 
-    - name: release
-      uses: softprops/action-gh-release@v0.1.14
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: 'dist/**'
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: ${{ matrix.os }}
+          path: dist
+
+      - name: release
+        uses: softprops/action-gh-release@v0.1.14
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: 'dist/**'
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
