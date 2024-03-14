@@ -19,8 +19,6 @@ jobs:
       os: [windows-latest, macos-latest, ubuntu-latest]
 
   steps:
-    - uses: actions/checkout@v4.0.0
-
     - name: Install Node.js
       uses: actions/setup-node@v3.0.0
       with:
