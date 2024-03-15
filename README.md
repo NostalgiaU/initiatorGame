@@ -1,8 +1,8 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">游戏启动器v0.1.0</h1>
 <h4 align="center">基于Electron和React开发适配Windows和Mac启动应用</h4>
+<img src="a7761acc5607bc17ced9c7b6c2384e1.png" />
 
 ## 项目介绍
-
 **背景：**
 
 - 想开发一款自己的极简游戏启动器，拥有想要的交互，同时也第一次写 Electron 的项目
